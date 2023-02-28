@@ -54,32 +54,6 @@ export const routes = [
     },
   },
   {
-    method: "POST",
-    path: buildRoutePath("/tasks/upload"),
-    handler: (req, res) => {
-      const { title, description } = req.body;
-
-      if (!title || !description) {
-        throw new TaskException("Inform both title and description", 500);
-      }
-
-      const index = database.select("tasks").length;
-
-      const user = {
-        id: randomUUID(),
-        title: title,
-        description: description,
-        completed_at: null,
-        created_at: new Date(),
-        updated_at: new Date(),
-      };
-
-      database.insert("tasks", user);
-
-      return res.writeHead(201).end(JSON.stringify(user));
-    },
-  },
-  {
     method: "DELETE",
     path: buildRoutePath("/tasks/:id"),
     handler: (req, res) => {
